@@ -22,6 +22,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { useToast } from './ui/use-toast'
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -46,6 +47,7 @@ const CreateNotes = () => {
     setFavorite((prev) => !prev)
   }
   const { toast } = useToast()
+  const { refresh } = useRouter()
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const request = await fetch('http://localhost:3333', {
       method: 'POST',
@@ -68,6 +70,7 @@ const CreateNotes = () => {
     }
     setFavorite(false)
     form.reset()
+    refresh()
   }
 
   return (
